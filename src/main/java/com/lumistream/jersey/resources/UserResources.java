@@ -11,14 +11,14 @@ public class UserResources {
     @Path("/addUser")
     @POST
     public void addUser(@PathParam("username") String username, @PathParam("pass") String userpass){
-       User u = new User();
-       u.addUser(username, userpass);
+       User u = new User(username, userpass);
+       u.addUser(u);
     }
 
     @Path("/login")
     @POST
     public void getUser(@PathParam("username") String username, @PathParam("pass") String userpass){
-
+        User u = new User(username, userpass);
     }
 
     @Path("/delete")

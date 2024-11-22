@@ -12,7 +12,8 @@ ext {
 
 buildscript {
     repositories {
-        jcenter()
+        jcenter();
+        mavenCentral();
     }
 }
 
@@ -32,4 +33,5 @@ dependencies {
     compile "org.glassfish.jersey.containers:jersey-container-jetty-http:${jerseyVersion}"
     compile "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
     compile "org.glassfish.jersey.inject:jersey-hk2:${jerseyVersion}"
+    compile "org.xerial:sqlite-jdbc:3.47.0.0"
 }
