@@ -7,11 +7,14 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.lumistream.jersey.user.UserSupervisor;
+
 import static org.eclipse.jetty.servlet.ServletContextHandler.NO_SESSIONS;
 
 public class JerseyApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(JerseyApplication.class);
+    public static UserSupervisor sup = UserSupervisor.getInstance();
 
     public static void main(String[] args) {
 

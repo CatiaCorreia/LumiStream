@@ -34,4 +34,5 @@ dependencies {
     compile "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
     compile "org.glassfish.jersey.inject:jersey-hk2:${jerseyVersion}"
     compile "org.xerial:sqlite-jdbc:3.47.0.0"
+    compile "org.bouncycastle:bcprov-jdk18on:1.79"
 }
