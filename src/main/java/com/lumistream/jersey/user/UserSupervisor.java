@@ -5,19 +5,18 @@ import java.util.Map;
 
 public class UserSupervisor {
     private static UserSupervisor u = null;
-    private static Map<String, Integer> log_users = null;
+    public static Map<String, Integer> log_users = null;
     private final static Integer APP1 = 1;
     private final static Integer APP2 = 2;
     private final static Integer BOTH = 2;
 
     private UserSupervisor() {
-        u = new UserSupervisor();
         log_users = new HashMap<String, Integer>();
     }
 
     public static UserSupervisor getInstance() {
-        if (log_users == null) {
-            new UserSupervisor();
+        if (u == null) {
+            u = new UserSupervisor();
         }
 
         return u;
