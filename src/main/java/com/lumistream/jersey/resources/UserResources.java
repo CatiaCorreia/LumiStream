@@ -1,7 +1,7 @@
 package com.lumistream.jersey.resources;
 
 import javax.ws.rs.*;
-//import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MediaType;
 
 import com.lumistream.jersey.user.User;
 import com.lumistream.jersey.user.UserSupervisor;
@@ -37,6 +37,6 @@ public class UserResources {
     @POST
     public void deleteUser(@PathParam("username") String username, @PathParam("pass") String userpass) {
         User.deleteUser(username, URL);
-    }
+    } 
 
 }
