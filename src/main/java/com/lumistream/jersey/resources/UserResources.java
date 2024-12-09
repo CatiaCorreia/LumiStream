@@ -11,8 +11,11 @@ import com.lumistream.jersey.user.UserSupervisor;
 public class UserResources {
 
     private final Integer APP1 = 1;
-    private static String URL = "jdbc:sqlite:LumiStream/src/main/databases/user.db";
+    //private static String URL = "jdbc:sqlite:LumiStream/src/main/databases/user.db";
+   // I HAD TO CHANGE THE PATH; IT HAS TO DO WITH HOW THE DIRECTORY I BUILD THE SERVER; MAYBE FOR YOU IS THE ONE ABOVE
+    private static String URL = "jdbc:sqlite:/src/main/databases/user.db";
 
+    
     @Path("/addUser")
     @POST
     public void addUser(@PathParam("username") String username, @PathParam("pass") String userpass) {
