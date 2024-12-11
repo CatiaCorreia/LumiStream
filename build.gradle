@@ -32,7 +32,10 @@ dependencies {
     compile "org.glassfish.jersey.containers:jersey-container-servlet-core:${jerseyVersion}"
     compile "org.glassfish.jersey.containers:jersey-container-jetty-http:${jerseyVersion}"
     compile "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
+    compile "org.glassfish.jersey.media:jersey-media-multipart:${jerseyVersion}"
+    compile "org.eclipse.jetty:jetty-servlet:${jettyVersion}"
     compile "org.glassfish.jersey.inject:jersey-hk2:${jerseyVersion}"
     compile "org.xerial:sqlite-jdbc:3.47.0.0"
     compile "org.bouncycastle:bcprov-jdk18on:1.79"
+    compile 'com.google.firebase:firebase-admin:9.1.1'
 }

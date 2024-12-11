@@ -1,3 +1,4 @@
+
 package com.lumistream.jersey.user;
 
 import java.sql.DriverManager;
@@ -14,19 +15,53 @@ import org.bouncycastle.crypto.params.Argon2Parameters;
 
 public class User {
 
+    private String username;
+    private String password;
+
     private static final Integer APP1 = 1;
     private static final Random RANDOM = new SecureRandom();
+
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public static void addUser(String username, String password, String url) {
         String salt = User.getSalt();
         String encrypted_pass = encryptPass(password, salt);
-        String sql = "INSERT INTO credential(name, password, salt) VALUES(" + username + ", " + encrypted_pass + ", "
-                + salt + ")";
+        
+        String sql = "INSERT INTO credential (name, password, salt) VALUES (?, ?, ?)";
+
 
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, username);
+            pstm.setString(2, encrypted_pass);
+            pstm.setString(3, salt);
             pstm.executeUpdate();
-        } catch (SQLException e) {
+
+	    System.out.println("User added to database: " + username);
+	} catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -34,11 +69,14 @@ public class User {
     public static void deleteUser(String username, String url) {
 
         if (UserSupervisor.isUserLoggedIn(username) == APP1) {
-            String sql = "DELETE FROM credential WHERE name = " + username;
+            String sql = "DELETE FROM credential WHERE name = ?";
 
             try (Connection conn = DriverManager.getConnection(url)) {
                 PreparedStatement pstm = conn.prepareStatement(sql);
+
+                pstm.setString(1, username);
                 pstm.executeUpdate();
+
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -74,20 +112,35 @@ public class User {
         return s_hash;
     }
 
+    
     public static Boolean Authenticate(String name, String password, String url) {
-        String query = "SELECT (password, salt) from credential where name = " + name;
+         String query = "SELECT password, salt FROM credential WHERE name = ?";
 
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, name);
+
             ResultSet res = pstm.executeQuery();
-            String hash = res.getString("password");
-            String salt = res.getString("salt");
-            String salted_pass = password + salt;
-            String hashed_pass = User.hash(salted_pass);
-            return hashed_pass.equals(hash);
+            if (res.next()) {
+                String hash = res.getString("password");
+                String salt = res.getString("salt");
+                
+                System.out.println("Found user: " + name);
+                System.out.println("Hash: " + hash);
+                System.out.println("Salt: " + salt);
+
+                String hashed_pass = encryptPass(password, salt);
+                
+                System.out.println("Computed hash: " + hashed_pass);
+                return hashed_pass.equals(hash);
+              
+            } else {
+                System.out.println("User not found: " + name);
+            }
+
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error during authentication: " + e.getMessage());
         }
-        return true;
+        return false;    
     }
 }
