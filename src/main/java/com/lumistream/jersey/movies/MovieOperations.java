@@ -11,11 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieOperations {
-	private static String SQL = "jdbc:sqlite:/LumiStream/src/main/databases/movies.db";
+    private static String SQL =  "jdbc:sqlite:/home/fanineto1/LumiStream/src/main/databases/movies.db";
+
 	
     public static Movie getMovie(String title){
         Movie movie = null;
-	    String query = "SELECT movie_id, title, description, genre, release_year, video_url_mp4, video_url_360p, video_url_1080p, duration, rating FROM movies WHERE title = ?";
+	    String query = "SELECT movieId, title, description, genre, releaseYear, videoUrlMp4, videoUrl360p, videoUrl1080p, duration, rating FROM movies WHERE title = ?";
         
         try (Connection conn = DriverManager.getConnection(SQL)) {
             PreparedStatement pstm = conn.prepareStatement(query);
@@ -26,24 +27,24 @@ public class MovieOperations {
             
                 System.out.println("Movie found: " + title);
 
-                int movie_id = res.getInt("movie_id");
+                int movieId = res.getInt("movieId");
                 String description = res.getString("description");
                 if(description == null) description = "";
 
                 String genre = res.getString("genre");
                 if(genre == null) genre = "Unknown";
 
-                Integer release_year = res.getInt("release_year");
+                Integer releaseYear = res.getInt("releaseYear");
                 if (res.wasNull()) release_year = 0; 
                 
-                String video_url_mp4 = res.getString("video_url_mp4");
-                if (video_url_mp4 == null) video_url_mp4 = "default_video_url_mp4";
+                String videoUrlMp4 = res.getString("videoUrlMp4");
+                if (videoUrlMp4 == null) videoUrlMp4 = "defaultVideoUrlMp4";
 
-                String video_url_360p = res.getString("video_url_360p");
-                if(video_url_360p == null) video_url_360p = "default_video_360p_url";
+                String videoUrl360p = res.getString("videoUrl360p");
+                if(videoUrl360p == null) videoUrl360p = "defaultVideoUrl360p";
                 
-                String video_url_1080p = res.getString("video_url_1080p");
-                if(video_url_1080p == null) video_url_1080p =  "default_video_1080p_url";
+                String videoUrl1080p = res.getString("videoUrl1080p");
+                if(videoUrl1080p == null) videoUrl1080p =  "defaultVideoUrl1080p";
 
                 Double duration = res.getDouble("duration");
                 if (res.wasNull()) duration = 0.0; 
@@ -52,7 +53,7 @@ public class MovieOperations {
                 if (res.wasNull()) rating = 0.0; 
 
 
-                movie = new Movie(movie_id, title, description, genre, release_year, video_url_mp4, video_url_360p, video_url_1080p, duration, rating);
+                movie = new Movie(movieId, title, description, genre, releaseYear, videoUrlMp4, videoUrl360p, videoUrl1080p, duration, rating);
             } else {
                 System.out.println("No movie found with title: " + title);
             }
@@ -66,7 +67,7 @@ public class MovieOperations {
     public static List<Movie> getListMovies(int limit){
         List<Movie> movies = new ArrayList<>();
         
-        String query = "SELECT movie_id, title, description, genre, release_year, video_url_mp4, video_url_360p, video_url_1080p, duration, rating FROM movies LIMIT ?";
+        String query = "SELECT movieId, title, description, genre, releaseYear, videoUrlMp4, videoUrl360p, videoUrl1080p, duration, rating FROM movies LIMIT ?";
         
         try (Connection conn = DriverManager.getConnection(SQL)) {
             PreparedStatement pstm = conn.prepareStatement(query);
@@ -76,7 +77,7 @@ public class MovieOperations {
                 
             while (res.next()) { 
             
-                int movie_id = res.getInt("movie_id");
+                int movieId = res.getInt("movieId");
                 String title = res.getString("title");
                 String description = res.getString("description");
                 if(description == null) description = "";
@@ -84,17 +85,17 @@ public class MovieOperations {
                 String genre = res.getString("genre");
                 if(genre == null) genre = "Unknown";
 
-                Integer release_year = res.getInt("release_year");
-                if (res.wasNull()) release_year = 0; 
-                
-                String video_url_mp4 = res.getString("video_url_mp4");
-                if (video_url_mp4 == null) video_url_mp4 = "default_video_url_mp4";
+                Integer releaseYear = res.getInt("releaseYear");
+                if (res.wasNull()) releaseYear = 0; 
 
-                String video_url_360p = res.getString("video_url_360p");
-                if(video_url_360p == null) video_url_360p = "default_video_360p_url";
+		String videoUrlMp4 = res.getString("videoUrlMp4");
+                if (videoUrlMp4 == null) videoUrlMp4 = "defaultVideoUrlMp4";
+
+                String videoUrl360p = res.getString("videoUrl360p");
+                if(videoUrl360p == null) videoUrl360p = "defaultVideoUrl360p";
                 
-                String video_url_1080p = res.getString("video_url_1080p");
-                if(video_url_1080p == null) video_url_1080p =  "default_video_1080p_url";
+                String videoUrl1080p = res.getString("videoUrl1080p");
+                if(videoUrl1080p == null) videoUrl1080p =  "defaultVideoUrl1080p";
 
                 Double duration = res.getDouble("duration");
                 if (res.wasNull()) duration = 0.0; 
@@ -103,7 +104,7 @@ public class MovieOperations {
                 if (res.wasNull()) rating = 0.0; 
 
 
-                movies.add(new Movie(movie_id, title, description, genre, release_year, video_url_mp4, video_url_360p, video_url_1080p, duration, rating));
+                movies.add(new Movie(movieId, title, description, genre, releaseYear, videoUrlMp4, videoUrl360p, videoUrl1080p, duration, rating));
             }
                 
         } catch (SQLException e) {
@@ -117,7 +118,7 @@ public class MovieOperations {
         String hls360 = directory + "movies_hls_360p/" + filename + ".m3u8";
         String hls = directory + "movies_hls_1080p/" + filename + ".m3u8";
         String variables = movie.getTitle() + ", " + movie.getDescription() + ", " + movie.getGenre() + ", " + movie.getReleaseYear() + ", " + mp4 + ", " + hls360 + ", " + hls + ", " + movie.getDuration() + ", " + movie.getRating();
-        String sql = "INSERT INTO movies(title, description, genre, release_year, video_url_mp4, video_url_360p, video_url_1080p, duration, rating ) VALUES(" + variables + ")";
+        String sql = "INSERT INTO movies(title, description, genre, releaseYear, videoUrlMp4, videoUrl360p, videoUrl1080p, duration, rating ) VALUES(" + variables + ")";
 
         try (Connection conn = DriverManager.getConnection(SQL)) {
             PreparedStatement pstm = conn.prepareStatement(sql);
