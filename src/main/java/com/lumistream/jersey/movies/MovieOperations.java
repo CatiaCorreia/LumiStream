@@ -35,7 +35,7 @@ public class MovieOperations {
                 if(genre == null) genre = "Unknown";
 
                 Integer releaseYear = res.getInt("releaseYear");
-                if (res.wasNull()) release_year = 0; 
+                if (res.wasNull()) releaseYear = 0; 
                 
                 String videoUrlMp4 = res.getString("videoUrlMp4");
                 if (videoUrlMp4 == null) videoUrlMp4 = "defaultVideoUrlMp4";
