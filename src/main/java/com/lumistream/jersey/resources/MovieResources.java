@@ -15,6 +15,7 @@ import com.lumistream.jersey.movies.Movie;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 
 @Path("movie")
@@ -44,14 +45,19 @@ public class MovieResources {
  
     }
 
-    /* @Path("/upload")
+    @Path("/upload")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadMovie(
-        @FormDataParam("file") InputStream uploadedInputStream,
-        @FormDataParam("file") FormDataContentDisposition fileDetail,
-        @FormDataParam("movieinfo") FormDataBodyPart movieInfo
-    ){
+    public Response uploadMovie(FormDataMultiPart multiPart    ){
+
+        FormDataBodyPart filePart = multiPart.getField("file");
+        InputStream uploadedInputStream = filePart.getValueAs(InputStream.class);
+        FormDataContentDisposition fileDetail = filePart.getFormDataContentDisposition();
+
+        FormDataBodyPart movieInfoPart = multiPart.getField("movieinfo");
+        movieInfoPart.setMediaType(MediaType.APPLICATION_JSON_TYPE);
+        Movie movie = movieInfoPart.getValueAs(Movie.class);
+
         String uploadedFileName = fileDetail.getFileName();
         String directory = "/mnt/newdisk/moviesStorage/movies1080p/"; 
         File file = new File(directory + uploadedFileName);
@@ -65,12 +71,9 @@ public class MovieResources {
 
         String outputDirectory = "/mnt/newdisk/moviesStorage/";
         MovieOperations.convertMovie(uploadedFileName, outputDirectory);
-
-        movieInfo.setMediaType(MediaType.APPLICATION_JSON_TYPE);
-        Movie movie=  movieInfo.getValueAs(Movie.class);
         MovieOperations.addMovie(movie, uploadedFileName.replace(".mp4", ""), outputDirectory);
         
         return Response.ok("uploaded").build();
-    } */
+    } 
 }
 
