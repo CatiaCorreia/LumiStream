@@ -117,11 +117,19 @@ public class MovieOperations {
         String mp4 = directory + "movies1080p/" + filename + ".mp4";
         String hls360 = directory + "movies_hls_360p/" + filename + ".m3u8";
         String hls = directory + "movies_hls_1080p/" + filename + ".m3u8";
-        String variables = movie.getTitle() + ", " + movie.getDescription() + ", " + movie.getGenre() + ", " + movie.getReleaseYear() + ", " + mp4 + ", " + hls360 + ", " + hls + ", " + movie.getDuration() + ", " + movie.getRating();
-        String sql = "INSERT INTO movies(title, description, genre, releaseYear, videoUrlMp4, videoUrl360p, videoUrl1080p, duration, rating ) VALUES(" + variables + ")";
+        String sql = "INSERT INTO movies(title, description, genre, releaseYear, videoUrlMp4, videoUrl360p, videoUrl1080p, duration, rating ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(SQL)) {
             PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(1, movie.getTitle());
+            pstm.setString(2, movie.getDescription());
+            pstm.setString(3, movie.getGenre());
+            pstm.setString(4, movie.getReleaseYear().toString());
+            pstm.setString(5, mp4);
+            pstm.setString(6, hls360);
+            pstm.setString(7, hls);
+            pstm.setString(8, movie.getDuration().toString());
+            pstm.setString(9, movie.getRating().toString());
             pstm.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -154,7 +162,7 @@ public class MovieOperations {
 
         try (Connection conn = DriverManager.getConnection(SQL)) {
             PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setString(1, movie.getTitle()); 
+            pstm.setString(1, movie.getTitle());
             pstm.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
