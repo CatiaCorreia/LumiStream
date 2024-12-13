@@ -142,7 +142,7 @@ public class MovieOperations {
         String[] commandArrhls =
         {
             "/bin/bash", "-c",
-            "cd" + outputDir +"movies_hls_1080p/ && ffmpeg -i " + filename + " -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls " + filename.replace(".mp4", "") + ".m3u8"
+            "cd " + outputDir +"movies_hls_1080p/ && ffmpeg -i " + filename + " -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls " + filename.replace(".mp4", "") + ".m3u8"
         };
 
         execCommand(commandArrhls);
@@ -159,6 +159,31 @@ public class MovieOperations {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        String[] command = 
+        {
+            "/bin/bash", "-c",
+            "rm " + movie.getVideoUrl1080p()
+        };
+        
+        execCommand(command);
+
+        String[] command360 = 
+        {
+            "/bin/bash", "-c",
+            "rm " + movie.getVideoUrl360p()
+        };
+
+        execCommand(command360);
+
+        String[] commandhls = 
+        {
+            "/bin/bash", "-c",
+            "rm " + movie.getVideoUrlMp4()
+        };
+
+        execCommand(commandhls);
+
     }
 
     public static void execCommand(String[] commandArr){
