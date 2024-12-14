@@ -15,7 +15,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class CMSUserResources {
 
     private final Integer APP = 2;
-    private static String URL = "jdbc:sqlite:/home/fanineto1/LumiStream/src/main/databases/cmsuser.db";
+ //   private static String URL = "jdbc:sqlite:/home/fanineto1/LumiStream/src/main/databases/cmsuser.db";
+    private static String URL = "jdbc:sqlite:/opt/LumiStream/src/main/databases/cmsuser.db";
+
 
     @Path("/addUser")
     @POST
