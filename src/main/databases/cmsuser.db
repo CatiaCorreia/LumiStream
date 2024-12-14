@@ -1,5 +1,0 @@
-create table credential(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    name VARCHAR(10) NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    salt VARCHAR(50) NOT NULL)
