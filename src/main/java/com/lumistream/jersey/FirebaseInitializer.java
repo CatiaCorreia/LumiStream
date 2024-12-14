@@ -10,7 +10,7 @@ public class FirebaseInitializer {
     public static void initializeFirebase() {
         try {
             // Path to the Firebase service account key
-            FileInputStream serviceAccount = new FileInputStream("/home/fanineto1/LumiStream/config/lumistream-fani-firebase-adminsdk-p89ku-a5a22091a4.json");
+          //  FileInputStream serviceAccount = new FileInputStream("/home/fanineto1/LumiStream/config/lumistream-fani-firebase-adminsdk-p89ku-a5a22091a4.json");
             FileInputStream serviceAccount = new FileInputStream("/opt/LumiStream/config/lumistream-fani-firebase-adminsdk-p89ku-a5a22091a4.json");
 
             // Configure Firebase options
