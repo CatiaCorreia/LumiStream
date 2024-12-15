@@ -158,7 +158,8 @@ public class MovieOperations {
                 
     }
 
-    public static void deleteMovie(Movie movie){
+    public static void deleteMovie(String movieName){
+        Movie movie = getMovie(movieName);
         String sql = "DELETE FROM credential WHERE name = ?";
 
         try (Connection conn = DriverManager.getConnection(SQL)) {

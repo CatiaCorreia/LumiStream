@@ -76,12 +76,11 @@ public class MovieResources {
         return Response.ok("uploaded").build();
     }
 
-    @Path("/delete")
+    @Path("/delete/{title}")
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteMovie(Movie movie){
-	MovieOperations.deleteMovie(movie);
-	return Response.ok("Movie deleted").build();
+    public Response deleteMovie(@PathParam("title") String movieName){
+	    MovieOperations.deleteMovie(movieName);
+	    return Response.ok("Movie deleted").build();
     }
 }
 
