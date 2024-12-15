@@ -76,7 +76,7 @@ public class MovieResources {
         return Response.ok("uploaded").build();
     }
 
-    @Path("\delete")
+    @Path("/delete")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteMovie(Movie movie){
