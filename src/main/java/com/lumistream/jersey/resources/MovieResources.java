@@ -74,6 +74,13 @@ public class MovieResources {
         MovieOperations.addMovie(movie, uploadedFileName.replace(".mp4", ""), outputDirectory);
         
         return Response.ok("uploaded").build();
-    } 
+    }
+
+    @Path("\delete")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteMovie(Movie movie){
+	MovieOperations.deleteMovie(movie);
+	return Response.ok("Movie deleted").build();
 }
 
