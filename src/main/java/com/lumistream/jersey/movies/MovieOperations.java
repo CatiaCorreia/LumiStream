@@ -160,7 +160,7 @@ public class MovieOperations {
 
     public static void deleteMovie(String movieName){
         Movie movie = getMovie(movieName);
-        String sql = "DELETE FROM credential WHERE name = ?";
+        String sql = "DELETE FROM movies WHERE name = ?";
 
         try (Connection conn = DriverManager.getConnection(SQL)) {
             PreparedStatement pstm = conn.prepareStatement(sql);
