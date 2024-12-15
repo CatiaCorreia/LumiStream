@@ -82,5 +82,6 @@ public class MovieResources {
     public Response deleteMovie(Movie movie){
 	MovieOperations.deleteMovie(movie);
 	return Response.ok("Movie deleted").build();
+    }
 }
 
