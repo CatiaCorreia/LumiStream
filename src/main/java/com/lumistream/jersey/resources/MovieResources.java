@@ -48,7 +48,7 @@ public class MovieResources {
     @Path("/upload")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadMovie(FormDataMultiPart multiPart    ){
+    public Response uploadMovie(FormDataMultiPart multiPart){
 
         FormDataBodyPart filePart = multiPart.getField("file");
         InputStream uploadedInputStream = filePart.getValueAs(InputStream.class);
